@@ -22,59 +22,6 @@
   d.getElementsByTagName("head")[0].appendChild(s);
 })();
 
-// Gate Google Analytics by Ketch consent (analytics purpose).
-(() => {
-  const analyticsPurpose =
-    (window.KETCH_ANALYTICS_PURPOSE || "analytics").toLowerCase();
-  let pageViewSent = false;
-
-  const findAnalyticsConsent = (consent) => {
-    if (!consent || typeof consent !== "object") return null;
-
-    if (Object.prototype.hasOwnProperty.call(consent, analyticsPurpose)) {
-      return consent[analyticsPurpose] === true;
-    }
-
-    const key = Object.keys(consent).find(
-      (name) =>
-        name.toLowerCase() === analyticsPurpose ||
-        name.toLowerCase().includes("analyt")
-    );
-
-    if (!key) return null;
-    return consent[key] === true;
-  };
-
-  const updateAnalyticsConsent = (isGranted) => {
-    if (typeof window.gtag !== "function") return;
-
-    window.gtag("consent", "update", {
-      analytics_storage: isGranted ? "granted" : "denied",
-    });
-
-    if (isGranted && !pageViewSent) {
-      pageViewSent = true;
-      window.gtag("event", "page_view");
-    }
-  };
-
-  const handleConsent = (consent) => {
-    const allowed = findAnalyticsConsent(consent);
-    if (typeof allowed === "boolean") {
-      updateAnalyticsConsent(allowed);
-    }
-  };
-
-  if (typeof window.ketch === "function") {
-    window.ketch("on", "consent", handleConsent);
-    return;
-  }
-
-  if (Array.isArray(window.semaphore)) {
-    window.semaphore.push(["on", "consent", handleConsent]);
-  }
-})();
-
 // Loops email capture form handler.
 (() => {
   const forms = document.querySelectorAll("[data-loops-endpoint]");
