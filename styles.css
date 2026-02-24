@@ -45,6 +45,19 @@ button {
   font-family: inherit;
 }
 
+#crisp-chatbox,
+.crisp-client {
+  bottom: 96px !important;
+  right: 24px !important;
+  z-index: 9998 !important;
+}
+
+#ketch-fab,
+.ketch-fab,
+.ketch-preference-button {
+  z-index: 9999 !important;
+}
+
 .container {
   width: min(var(--container), 100% - 48px);
   margin: 0 auto;

@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /coming-soon/
+Disallow: /waitlist-success/
+
+Sitemap: https://www.scripnote.com/sitemap.xml
